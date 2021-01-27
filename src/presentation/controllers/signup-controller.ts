@@ -1,4 +1,6 @@
 import { HttpRequest, HttpResponse } from '../interfaces/http'
+import { MissinParmError } from '../errors/missing-param-error'
+
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
@@ -7,7 +9,7 @@ export class SignUpController {
       if (!httpRequest.body[field]) {
         return {
           statusCode: 400,
-          body: new Error(`Missing param: ${field}`)
+          body: new MissinParmError(field)
         }
       }
     }
