@@ -1,5 +1,5 @@
+import { Encrypter } from './db-add-account-dependencies'
 import { DbAddAccount } from '../add-account/db-add-account'
-import { Encrypter } from '../../interfaces/encrypter'
 
 const makeEcrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
