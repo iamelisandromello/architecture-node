@@ -1,10 +1,12 @@
 import { HttpRequest, HttpResponse, Controller, EmailValidator } from '../interfaces'
 import { MissinParmError, InvalidParmError } from '../errors'
 import { badRequest, serverError } from '../helpers/http-helper'
+import { AddAccount } from '../../domain/usecases/interfaces/add-account'
 
 export class SignUpController implements Controller {
   constructor (
-    private readonly emailValidator: EmailValidator
+    private readonly emailValidator: EmailValidator,
+    private readonly addAccount: AddAccount
   ) {}
 
   handle (httpRequest: HttpRequest): HttpResponse {
@@ -16,7 +18,7 @@ export class SignUpController implements Controller {
         }
       }
 
-      const { password, passwordConfirmation, email } = httpRequest.body
+      const { name, password, passwordConfirmation, email } = httpRequest.body
       if (password !== passwordConfirmation) {
         return badRequest(new InvalidParmError('passwordConfirmation'))
       }
@@ -25,6 +27,12 @@ export class SignUpController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParmError('email'))
       }
+
+      this.addAccount.add({
+        name,
+        email,
+        password
+      })
     } catch (error) {
       return serverError()
     }
