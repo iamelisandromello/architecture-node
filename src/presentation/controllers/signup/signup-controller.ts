@@ -1,7 +1,6 @@
-import { HttpRequest, HttpResponse, Controller, EmailValidator } from '../interfaces'
-import { MissinParmError, InvalidParmError } from '../errors'
-import { badRequest, serverError } from '../helpers/http-helper'
-import { AddAccount } from '../../domain/usecases/interfaces/add-account'
+import { HttpRequest, HttpResponse, Controller, EmailValidator, AddAccount } from './signup-dependencies'
+import { MissinParmError, InvalidParmError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 
 export class SignUpController implements Controller {
   constructor (
